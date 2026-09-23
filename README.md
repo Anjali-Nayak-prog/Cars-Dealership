@@ -1,2 +1,7 @@
-# Cars-Dealership
-Full-Stack Development Capstone Project – Cars Dealership
+# Cars Dealership
+
+## Repository Name
+Cars-Dealership
+
+## Project Name
+Cars Dealership
