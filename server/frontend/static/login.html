@@ -32,8 +32,10 @@
 
 <body>
 
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <div class="container-fluid">
+
             <h2>Cars Dealership</h2>
 
             <div>
@@ -42,10 +44,14 @@
                 <a class="nav-link d-inline" href="/about">About Us</a>
                 <a class="nav-link d-inline" href="/contact">Contact Us</a>
             </div>
+
         </div>
     </nav>
 
+
+    <!-- Login Form -->
     <div class="login-container">
+
         <div class="card login-card">
 
             <h2 class="text-center mb-4">Login</h2>
@@ -60,6 +66,7 @@
                     <input type="text" id="username" class="form-control" value="testuser" required>
                 </div>
 
+
                 <div class="mb-3">
                     <label for="password" class="form-label">
                         Password
@@ -67,6 +74,7 @@
 
                     <input type="password" id="password" class="form-control" value="Test@12345" required>
                 </div>
+
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">
@@ -76,57 +84,82 @@
 
             </form>
 
+
             <div id="message" class="mt-3"></div>
 
         </div>
+
     </div>
 
+
+    <!-- Login JavaScript -->
     <script>
-        document.getElementById("loginForm").addEventListener("submit", async function (event) {
 
-            event.preventDefault();
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function (event) {
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+                event.preventDefault();
 
-            try {
+                const username =
+                    document.getElementById("username").value;
 
-                const response = await fetch("/djangoapp/login", {
-                    method: "POST",
+                const password =
+                    document.getElementById("password").value;
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
 
-                    body: JSON.stringify({
-                        userName: username,
-                        password: password
-                    })
-                });
+                try {
 
-                const result = await response.json();
+                    const response = await fetch(
+                        "/djangoapp/login",
+                        {
+                            method: "POST",
 
-                if (result.status === "Authenticated") {
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
 
-                    sessionStorage.setItem("username", result.userName);
+                            body: JSON.stringify({
+                                userName: username,
+                                password: password
+                            })
+                        }
+                    );
 
-                    window.location.href = "/dealers";
 
-                } else {
+                    const result = await response.json();
+
+
+                    if (result.status === "Authenticated") {
+
+                        sessionStorage.setItem(
+                            "username",
+                            result.userName
+                        );
+
+                        window.location.href = "/dealers";
+
+                    } else {
+
+                        document.getElementById("message").innerHTML =
+                            '<div class="alert alert-danger">' +
+                            'Invalid username or password.' +
+                            '</div>';
+
+                    }
+
+                } catch (error) {
+
+                    console.error(error);
 
                     document.getElementById("message").innerHTML =
-                        '<div class="alert alert-danger">Invalid username or password.</div>';
+                        '<div class="alert alert-danger">' +
+                        'Unable to connect to the server.' +
+                        '</div>';
                 }
 
-            } catch (error) {
+            });
 
-                console.error(error);
-
-                document.getElementById("message").innerHTML =
-                    '<div class="alert alert-danger">Unable to connect to the server.</div>';
-            }
-
-        });
     </script>
 
 </body>
