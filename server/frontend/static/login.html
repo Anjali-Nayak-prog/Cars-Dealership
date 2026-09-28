@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Cars Dealership</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: darkturquoise; height: 1in;">
+
+        <div class="container-fluid">
+
+            <h2>Cars Dealership</h2>
+
+            <div>
+                <a class="nav-link d-inline" href="/">Home</a>
+                <a class="nav-link d-inline" href="/dealers">Dealerships</a>
+                <a class="nav-link d-inline" href="/about">About Us</a>
+                <a class="nav-link d-inline" href="/contact">Contact Us</a>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <div class="container mt-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-6">
+
+                <div class="card shadow">
+
+                    <div class="card-body">
+
+                        <h2 class="text-center mb-4">
+                            Login
+                        </h2>
+
+                        <form id="loginForm">
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Username
+                                </label>
+
+                                <input type="text" id="username" class="form-control" value="testuser" required>
+
+                            </div>
+
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Password
+                                </label>
+
+                                <input type="password" id="password" class="form-control" value="Test@12345" required>
+
+                            </div>
+
+
+                            <div class="text-center">
+
+                                <button type="submit" class="btn btn-primary">
+                                    Login
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        <div id="result" class="mt-4"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function (event) {
+
+                event.preventDefault();
+
+                const username =
+                    document.getElementById("username").value;
+
+                const password =
+                    document.getElementById("password").value;
+
+
+                try {
+
+                    const response = await fetch(
+                        "/djangoapp/login",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                userName: username,
+                                password: password
+                            })
+                        }
+                    );
+
+
+                    const result = await response.json();
+
+
+                    if (
+                        response.ok &&
+                        result.status === "Authenticated"
+                    ) {
+
+                        sessionStorage.setItem(
+                            "username",
+                            result.userName
+                        );
+
+
+                        document.getElementById("result").innerHTML = `
+                <div class="alert alert-success">
+                    Login successful! Welcome
+                    ${result.userName}
+                </div>
+            `;
+
+
+                        setTimeout(function () {
+
+                            window.location.href = "/dealers";
+
+                        }, 500);
+
+
+                    } else {
+
+                        document.getElementById("result").innerHTML = `
+                <div class="alert alert-danger">
+                    Invalid username or password.
+                </div>
+            `;
+
+                    }
+
+                } catch (error) {
+
+                    document.getElementById("result").innerHTML = `
+            <div class="alert alert-danger">
+                Error connecting to the server.
+            </div>
+        `;
+
+                    console.error(error);
+
+                }
+
+            });
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Dealerships</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: darkturquoise; height: 1in;">
+
+        <div class="container-fluid">
+
+            <h2>Dealerships</h2>
+
+            <div>
+
+                <a class="nav-link d-inline" href="/">
+                    Home
+                </a>
+
+                <a class="nav-link d-inline" href="/dealers">
+                    Dealerships
+                </a>
+
+                <a class="nav-link d-inline" href="/about">
+                    About Us
+                </a>
+
+                <a class="nav-link d-inline" href="/contact">
+                    Contact Us
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- LOGGED-IN USER -->
+
+    <div class="container mt-3" id="userSection">
+
+        <div class="alert alert-success">
+
+            Logged in as:
+            <strong id="username"></strong>
+
+        </div>
+
+    </div>
+
+
+    <div class="container mt-5">
+
+        <h2 class="text-center mb-4">
+            Our Dealerships
+        </h2>
+
+
+        <div class="row">
+
+            {% for dealer in dealers %}
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card h-100 shadow">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            {{ dealer.full_name }}
+                        </h5>
+
+
+                        <p class="card-text">
+                            <strong>City:</strong>
+                            {{ dealer.city }}
+                        </p>
+
+
+                        <p class="card-text">
+                            <strong>State:</strong>
+                            {{ dealer.state }}
+                        </p>
+
+
+                        <p class="card-text">
+                            <strong>Address:</strong>
+                            {{ dealer.address }}
+                        </p>
+
+
+                        <p class="card-text">
+                            <strong>ZIP:</strong>
+                            {{ dealer.zip }}
+                        </p>
+
+
+                        <a href="/djangoapp/dealer/{{ dealer.id }}" class="btn btn-primary">
+                            View Dealer Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const username =
+            sessionStorage.getItem("username");
+
+
+        if (username) {
+
+            document
+                .getElementById("username")
+                .textContent = username;
+
+        } else {
+
+            document
+                .getElementById("userSection")
+                .style.display = "none";
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

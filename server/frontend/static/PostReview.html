@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Post Review</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: darkturquoise; height: 1in;">
+
+        <div class="container-fluid">
+
+            <h2>Post Review</h2>
+
+            <div>
+                <a class="nav-link d-inline" href="/">Home</a>
+                <a class="nav-link d-inline" href="/dealers">Dealerships</a>
+                <a class="nav-link d-inline" href="/about">About Us</a>
+                <a class="nav-link d-inline" href="/contact">Contact Us</a>
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <div class="container mt-5">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <h2 class="text-center mb-4">
+                    Post a Review
+                </h2>
+
+
+                <form id="reviewForm">
+
+                    <!-- Name -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Name
+                        </label>
+
+                        <input type="text" id="name" class="form-control" value="John Doe" required>
+
+                    </div>
+
+
+                    <!-- Review -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Review
+                        </label>
+
+                        <textarea id="review" class="form-control" rows="4"
+                            required>Excellent service and a great car buying experience.</textarea>
+
+                    </div>
+
+
+                    <!-- Rating -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Rating
+                        </label>
+
+                        <select id="rating" class="form-select">
+
+                            <option value="5" selected>5</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Car Make -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Car Make
+                        </label>
+
+                        <input type="text" id="car_make" class="form-control" value="Toyota" required>
+
+                    </div>
+
+
+                    <!-- Car Model -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Car Model
+                        </label>
+
+                        <input type="text" id="car_model" class="form-control" value="Camry" required>
+
+                    </div>
+
+
+                    <!-- Car Year -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Car Year
+                        </label>
+
+                        <input type="number" id="car_year" class="form-control" value="2022" required>
+
+                    </div>
+
+
+                    <!-- Purchase Date -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Purchase Date
+                        </label>
+
+                        <input type="date" id="purchase_date" class="form-control" value="2022-06-01" required>
+
+                    </div>
+
+
+                    <!-- Purchase -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Purchase
+                        </label>
+
+                        <select id="purchase" class="form-select">
+
+                            <option value="Yes" selected>
+                                Yes
+                            </option>
+
+                            <option value="No">
+                                No
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Dealer ID -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Dealer ID
+                        </label>
+
+                        <input type="number" id="dealer_id" class="form-control" value="15" required>
+
+                    </div>
+
+
+                    <!-- Car ID -->
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Car ID
+                        </label>
+
+                        <input type="number" id="car_id" class="form-control" value="1" required>
+
+                    </div>
+
+
+                    <!-- Submit -->
+                    <div class="text-center">
+
+                        <button type="submit" class="btn btn-primary">
+                            Submit Review
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <!-- Result -->
+                <div id="result" class="mt-4"></div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        document
+            .getElementById("reviewForm")
+            .addEventListener("submit", async function (event) {
+
+                event.preventDefault();
+
+
+                const reviewData = {
+
+                    name:
+                        document.getElementById("name").value,
+
+                    review:
+                        document.getElementById("review").value,
+
+                    rating:
+                        document.getElementById("rating").value,
+
+                    car_make:
+                        document.getElementById("car_make").value,
+
+                    car_model:
+                        document.getElementById("car_model").value,
+
+                    car_year:
+                        document.getElementById("car_year").value,
+
+                    purchase_date:
+                        document.getElementById("purchase_date").value,
+
+                    purchase:
+                        document.getElementById("purchase").value,
+
+                    dealer_id:
+                        document.getElementById("dealer_id").value,
+
+                    car_id:
+                        document.getElementById("car_id").value
+
+                };
+
+
+                try {
+
+                    const response = await fetch(
+                        "/djangoapp/add_review",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+
+                            body: JSON.stringify(reviewData)
+                        }
+                    );
+
+
+                    const result = await response.json();
+
+
+                    if (response.ok) {
+
+                        document.getElementById("result").innerHTML = `
+
+                    <div class="alert alert-success">
+
+                        <strong>
+                            ${result.status}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="card shadow mt-4">
+
+                        <div class="card-body">
+
+                            <h3 class="mb-4">
+                                Posted Review
+                            </h3>
+
+
+                            <p>
+                                <strong>Name:</strong>
+                                ${result.review.name}
+                            </p>
+
+
+                            <p>
+                                <strong>Review:</strong>
+                                ${result.review.review}
+                            </p>
+
+
+                            <p>
+                                <strong>Rating:</strong>
+                                ${result.review.rating}
+                            </p>
+
+
+                            <p>
+                                <strong>Car:</strong>
+                                ${result.review.car_make}
+                                ${result.review.car_model}
+                                (${result.review.car_year})
+                            </p>
+
+
+                            <p>
+                                <strong>Purchase Date:</strong>
+                                ${result.review.purchase_date}
+                            </p>
+
+
+                            <p>
+                                <strong>Purchase:</strong>
+                                ${result.review.purchase}
+                            </p>
+
+
+                            <p>
+                                <strong>Dealer ID:</strong>
+                                ${result.review.dealer_id}
+                            </p>
+
+
+                            <p>
+                                <strong>Car ID:</strong>
+                                ${result.review.car_id}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+                    } else {
+
+                        document.getElementById("result").innerHTML = `
+
+                    <div class="alert alert-danger">
+
+                        ${result.error || "Failed to add review"}
+
+                    </div>
+
+                `;
+
+                    }
+
+                } catch (error) {
+
+                    document.getElementById("result").innerHTML = `
+
+                <div class="alert alert-danger">
+
+                    Error submitting review.
+
+                </div>
+
+            `;
+
+                    console.error(error);
+
+                }
+
+            });
+
+    </script>
+
+</body>
+
+</html>

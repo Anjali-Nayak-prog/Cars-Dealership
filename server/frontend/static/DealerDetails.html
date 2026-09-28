@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Dealer Details</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: darkturquoise; height: 1in;">
+
+        <div class="container-fluid">
+
+            <h2>Dealer Details</h2>
+
+            <div>
+
+                <a class="nav-link d-inline" href="/">
+                    Home
+                </a>
+
+                <a class="nav-link d-inline" href="/dealers">
+                    Dealerships
+                </a>
+
+                <a class="nav-link d-inline" href="/about">
+                    About Us
+                </a>
+
+                <a class="nav-link d-inline" href="/contact">
+                    Contact Us
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <div class="container mt-5">
+
+        <div class="card shadow">
+
+            <div class="card-body">
+
+                <h2 class="mb-4">
+                    {{ dealer.full_name }}
+                </h2>
+
+
+                <p>
+                    <strong>City:</strong>
+                    {{ dealer.city }}
+                </p>
+
+                <p>
+                    <strong>State:</strong>
+                    {{ dealer.state }}
+                </p>
+
+                <p>
+                    <strong>Address:</strong>
+                    {{ dealer.address }}
+                </p>
+
+                <p>
+                    <strong>ZIP:</strong>
+                    {{ dealer.zip }}
+                </p>
+
+                <p>
+                    <strong>Dealer ID:</strong>
+                    {{ dealer.id }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="mt-5">
+
+            <h3>
+                Customer Reviews
+            </h3>
+
+
+            {% if reviews %}
+
+            {% for review in reviews %}
+
+            <div class="card shadow mt-3">
+
+                <div class="card-body">
+
+                    <h5>
+                        {{ review.name }}
+                    </h5>
+
+                    <p>
+                        <strong>Review:</strong>
+                        {{ review.review }}
+                    </p>
+
+                    <p>
+                        <strong>Car:</strong>
+                        {{ review.car_make }}
+                        {{ review.car_model }}
+                    </p>
+
+                    <p>
+                        <strong>Year:</strong>
+                        {{ review.car_year }}
+                    </p>
+
+                    <p>
+                        <strong>Purchase Date:</strong>
+                        {{ review.purchase_date }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <div class="alert alert-info mt-3">
+                No reviews available for this dealership.
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="text-center mt-5 mb-5">
+
+            <a href="/djangoapp/post_review" class="btn btn-primary">
+                Post a Review
+            </a>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

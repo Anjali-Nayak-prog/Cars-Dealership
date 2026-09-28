@@ -1,0 +1,13 @@
+{
+    "review": "Fantastic services",
+    "rating": 5,
+    "car_make": "Toyota",
+    "car_model": "Camry",
+    "car_year": 2022,
+    "purchase_date": "2022-06-01",
+    "purchase": "Yes",
+    "name": "John Doe",
+    "id": 1,
+    "car_id": 1,
+    "dealer_id": 1
+}
