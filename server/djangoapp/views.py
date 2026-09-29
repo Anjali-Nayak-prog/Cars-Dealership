@@ -173,6 +173,7 @@ def get_dealers_by_state(request, state):
 # def add_review(request):
 # ...
 
+
 # Create an `analyze_review` view to analyze review sentiment
 @csrf_exempt
 def analyze_review(request):
