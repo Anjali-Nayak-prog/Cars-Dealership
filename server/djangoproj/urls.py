@@ -39,6 +39,12 @@ urlpatterns = [
         TemplateView.as_view(template_name='Contact.html'),
         name='contact'
     ),
+
+    path(
+        'analyze/<str:review_text>',
+        views.analyze_review_get,
+        name='analyze_review_get'
+    ),
 ]
 
 urlpatterns += static(
